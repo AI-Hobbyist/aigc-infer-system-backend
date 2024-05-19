@@ -1,11 +1,15 @@
-# aigc-infer-system-api
+# aigc-infer-system-backend
 (开发中)AI在线推理平台。适用于TTS、SVC等等的在线推理，此仓库为后端。
+
+**前端传送门（后续会适配）：**[https://github.com/AI-Hobbyist/aigc-infer-system-frontend](https://github.com/AI-Hobbyist/aigc-infer-system-frontend)
 
 <!-- **后端开发/维护：**[红血球AE3803](https://github.com/Erythrocyte3803) -->
 ## 后端开发/维护：
  - @Erythrocyte3803
 
 ## 接口列表
+
+**注：**请求数据格式将在后端开发完成后更新
 
 ### 用户操作
 
