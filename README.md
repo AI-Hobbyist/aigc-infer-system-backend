@@ -17,8 +17,9 @@
 | :----------: | :---------: | :------: |
 |   用户登录   | /user/login |   POST   |
 |   用户登出（开发中，暂不可用）   | /user/logout |   POST   |
-|   刷新令牌   | /user/token |   POST   |
+|   刷新访问令牌   | /user/access_token |   POST   |
 | 获取登录信息 |    /user    |   GET    |
+|   获取令牌状态   | /user/token/status |   POST   |
 
 ### 推理操作（开发中，暂不可用）
 
