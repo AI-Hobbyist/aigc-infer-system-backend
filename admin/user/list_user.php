@@ -3,8 +3,8 @@ include($_SERVER['DOCUMENT_ROOT'].'/include/classes.php');
 function list_user($user_token) {
     global $db;
     $user_list = array();
-    if ($db->get_user_token($user_token) == "") {
-        $msg = "用户令牌错误！";
+    if ($db->get_user_token($user_token) == ""   || !$db->token_status($user_token)) {
+        $msg = "用户令牌无效！";
     } else {
         $group = $db->get_group($user_token);
         if ($group < 1) {

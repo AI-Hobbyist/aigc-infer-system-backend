@@ -2,8 +2,10 @@
 #=================加载所需函数=================
 #-----------------用户相关函数-----------------
 require_once($_SERVER['DOCUMENT_ROOT'] . "/user/login.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/user/logout.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/user/refresh_token.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/user/get_user.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/user/check_token.php");
 
 #-----------------管理相关函数-----------------
 #用户管理

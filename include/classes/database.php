@@ -176,7 +176,7 @@ class database {
         }
     }
 
-    #==============数据写入==============
+    #==============用户操作==============
     #将密码加密方式升级为Bcrypt
     function upgrade_pass_to_bcrypt($uid, $password) {
         global $userdata;
@@ -213,7 +213,7 @@ class database {
         $this->query_change("update $appdata.users set username='$username', email='$email', password='$password', ip='$ip', avatar='$avatar', last_login='$last_login' where uid='$uid'");
         $hash_mehod = 'sha256';
         $user_token = md5(hash($hash_mehod, hash($hash_mehod, $username).hash($hash_mehod, $email).hash($hash_mehod, $password)));
-        $this->query_change("update $appdata.tokens set user_token='$user_token' where uid='$uid'");
+        $this->query_change("update $appdata.tokens set user_token='$user_token', status='1' where uid='$uid'");
     }
 
     #刷新访问令牌
@@ -223,6 +223,23 @@ class database {
         $access_token = md5(hash($hash_mehod, hash($hash_mehod, $user_token).rand()).time());
         $this->query_change("update $appdata.tokens set access_token='$access_token' where user_token='$user_token'");
         return $access_token;
+    }
+    
+    #退出登录
+    function user_logout($user_token){
+        global $appdata;
+        $this->query_change("update $appdata.tokens set status='0' where user_token='$user_token'");
+    }
+    
+    #获取令牌状态
+    function token_status($user_token){
+        global $appdata;
+        $res = $this->query("select status from $appdata.tokens where user_token='$user_token'");
+        if ($res[0][0] == 1){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     #==============管理操作==============

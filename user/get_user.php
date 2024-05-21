@@ -4,8 +4,8 @@ function get_user($user_token){
     global $db;
     $access_token = 0;
     $uid = $username = $email = $isadmin = $ip = $avatar = $reg = $last_login = 0;
-    if ($db->get_user_token($user_token) == ""){
-        $msg = "用户令牌错误！";
+    if ($db->get_user_token($user_token) == "" || !$db->token_status($user_token)){
+        $msg = "用户令牌无效！";
     }else{
         $uid = $db->get_uid_by_user_token($user_token);
         $user_info = $db->get_info_by_uid($uid);

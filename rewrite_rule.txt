@@ -1,6 +1,6 @@
 rewrite ^/user$ /?type=user&mode=get_user last;
 rewrite ^/user/login$ /?type=user&mode=login last;
-rewrite ^/user/token/access$ /?type=user&mode=refresh_token last;
+rewrite ^/user/token$ /?type=user&mode=refresh_token last;
 rewrite ^/admin/users$ /?type=admin&mode=list_user last;
 rewrite ^/admin/user/(.*)/set$ /?type=admin&mode=set_admin&uid=$1 last;
 rewrite ^/admin/user/(.*)/unset$ /?type=admin&mode=unset_admin&id=$1 last;

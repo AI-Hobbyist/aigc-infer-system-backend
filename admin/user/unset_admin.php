@@ -1,9 +1,8 @@
 <?php
 function unset_admin($user_token, $uid) {
     global $db;
-    $user_list = array();
-    if ($db->get_user_token($user_token) == "") {
-        $msg = "用户令牌错误！";
+    if ($db->get_user_token($user_token) == ""  || !$db->token_status($user_token)) {
+        $msg = "用户令牌无效！";
     } else {
         $group = $db->get_group($user_token);
         if ($group < 1) {

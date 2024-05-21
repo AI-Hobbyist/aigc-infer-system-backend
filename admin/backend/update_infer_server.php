@@ -4,8 +4,8 @@ function update_server($user_token, $id, $server, $name, $category, $brand, $app
     global $db;
     $cat = strtolower($category);
     $bra = strtolower($brand);
-    if ($db->get_user_token($user_token) == "") {
-        $msg = "用户令牌错误！";
+    if ($db->get_user_token($user_token) == "" || !$db->token_status($user_token)) {
+        $msg = "用户令牌无效！";
     } else {
         $group = $db->get_group($user_token);
         if ($group < 1) {

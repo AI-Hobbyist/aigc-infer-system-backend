@@ -47,6 +47,32 @@ switch ($apitype) {
                 exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
             }
             break;
+            
+            //获取令牌状态
+        case 'token_status';
+            if ($method == "GET") {
+                header('content-type:application/json;charset=utf8');
+                $data = json_decode(file_get_contents('php://input'), true, 10);
+                $status = check_token($data['user_token']);
+                $token_status = array("status" => $status);
+                echo json_encode($token_status, JSON_PRETTY_PRINT);
+            } else {
+                exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
+            }
+            break;
+            
+            //退出登录
+        case 'logout';
+            if ($method == "POST") {
+                header('content-type:application/json;charset=utf8');
+                $data = json_decode(file_get_contents('php://input'), true, 10);
+                $logout = logout($data['user_token']);
+                $user_logout = array("message" => $logout);
+                echo json_encode($user_logout, JSON_PRETTY_PRINT);
+            } else {
+                exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
+            }
+            break;
         }
         break;
     case 'admin';
