@@ -1,6 +1,9 @@
+rewrite ^/$ /?type=hello last;
 rewrite ^/user$ /?type=user&mode=get_user last;
 rewrite ^/user/login$ /?type=user&mode=login last;
-rewrite ^/user/token$ /?type=user&mode=refresh_token last;
+rewrite ^/user/logout$ /?type=user&mode=logout last;
+rewrite ^/user/token/access$ /?type=user&mode=refresh_token last;
+rewrite ^/user/token/status$ /?type=user&mode=token_status last;
 rewrite ^/admin/users$ /?type=admin&mode=list_user last;
 rewrite ^/admin/user/(.*)/set$ /?type=admin&mode=set_admin&uid=$1 last;
 rewrite ^/admin/user/(.*)/unset$ /?type=admin&mode=unset_admin&id=$1 last;
@@ -8,3 +11,5 @@ rewrite ^/admin/server/add$ /?type=admin&mode=add_infer_server last;
 rewrite ^/admin/servers$ /?type=admin&mode=list_infer_server last;
 rewrite ^/admin/server/(.*)/update$ /?type=admin&mode=update_infer_server&id=$1 last;
 rewrite ^/admin/server/(.*)/delete$ /?type=admin&mode=del_infer_server&id=$1 last;
+rewrite ^/infer/spks$ /?type=infer&mode=get_spks last;
+rewrite ^/infer/gen$ /?type=infer&mode=gen last;

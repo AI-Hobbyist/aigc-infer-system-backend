@@ -19,7 +19,7 @@ class POSTDATA {
         $time = curl_getinfo($ch,CURLINFO_NAMELOOKUP_TIME) + curl_getinfo($ch,CURLINFO_CONNECT_TIME) + curl_getinfo($ch,CURLINFO_TOTAL_TIME);
         $timeout = $time * 1000;
         curl_close($ch);
-        return $response;
+        return array($httpCode, $response);
     }
     static function getTicket($url){
         $ch = curl_init();

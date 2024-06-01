@@ -25,4 +25,5 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/infer/gen.php");
 
 #-----------------其他相关函数-----------------
 require_once($_SERVER['DOCUMENT_ROOT'] . "/include/functions/check_support.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/include/functions/spk_url.php");
 #==============================================

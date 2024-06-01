@@ -241,6 +241,44 @@ class database {
             return false;
         }
     }
+    
+    #==============推理操作==============
+    #判断项目是否存在
+    function check_type($category, $brand, $name) {
+        global $appdata;
+        $res = $this->query("select name, brand from $appdata.apis where name='$name' and brand = '$brand' and category = '$category'");
+        if (!empty($res)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    #根据条件获取url
+    function get_url($category, $brand, $name){
+        global $appdata;
+        $res = $this->query("select server, spk_url from $appdata.apis where name='$name' and brand = '$brand' and category = '$category'");
+        return array($res[0][0],$res[0][1]);
+    }
+    
+    #判断访问令牌是否有效
+    function check_access($access_token){
+        global $appdata;
+        $res = $this->query("select access_token from $appdata.tokens where access_token='$access_token'");
+        if (!empty($res)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    #获取APPKEY
+    function get_infer_prarm($category, $brand, $name){
+        global $appdata;
+        $res = $this->query("select app_key, server from $appdata.apis where name='$name' and brand = '$brand' and category = '$category'");
+        return array($res[0][0],$res[0][1]);
+    }
+    
 
     #==============管理操作==============
     #--------------用户管理--------------
@@ -265,23 +303,23 @@ class database {
 
     #--------------后端管理--------------
     #添加推理后端
-    function add_infer_server($server, $name, $username, $category, $brand, $appkey, $note) {
+    function add_infer_server($server, $name, $username, $category, $brand, $appkey, $spk_url, $note) {
         global $appdata;
         $date = time();
-        $this->query_change("insert into $appdata.apis (server, name, added_by, category, brand, app_key, note, date) values ('$server', '$name', '$username', '$category', '$brand', '$appkey', '$note', '$date')");
+        $this->query_change("insert into $appdata.apis (server, name, added_by, category, brand, app_key, spk_url, note, date) values ('$server', '$name', '$username', '$category', '$brand', '$appkey', '$spk_url', '$note', '$date')");
     }
 
     #列出推理后端
     function get_server_list($index) {
         global $appdata;
         $res = $this->query("select * from $appdata.apis");
-        return array($res[$index][0], $res[$index][1], $res[$index][2], $res[$index][3], $res[$index][4], $res[$index][5], $res[$index][6], $res[$index][7], $res[$index][8]);
+        return array($res[$index][0], $res[$index][1], $res[$index][2], $res[$index][3], $res[$index][4], $res[$index][5], $res[$index][6], $res[$index][7], $res[$index][8], $res[$index][9]);
     }
 
     #修改推理后端
-    function update_server($id, $server, $name, $category, $brand, $appkey) {
+    function update_server($id, $server, $name, $category, $brand, $appkey, $spkurl) {
         global $appdata;
-        $this->query_change("update $appdata.apis set server='$server', name='$name', category='$category', brand='$brand', app_key='$appkey' where id='$id'");
+        $this->query_change("update $appdata.apis set server='$server', name='$name', category='$category', brand='$brand', spk_url='$spkurl', app_key='$appkey' where id='$id'");
     }
     
     #删除推理后端
@@ -289,4 +327,5 @@ class database {
         global $appdata;
         $this->query_change("delete from $appdata.apis where id = '$id'");
     }
+    
 }

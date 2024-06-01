@@ -7,6 +7,9 @@ $ip = $_SERVER["REMOTE_ADDR"];
 $method = $_SERVER['REQUEST_METHOD'];
 //API模式
 switch ($apitype) {
+    case 'hello';
+        echo "Hi! This is an infer api!";
+        break;
     case 'user';
         switch ($actmode) {
             //登录验证
@@ -47,7 +50,7 @@ switch ($apitype) {
                 exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
             }
             break;
-            
+
             //获取令牌状态
         case 'token_status';
             if ($method == "GET") {
@@ -60,7 +63,7 @@ switch ($apitype) {
                 exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
             }
             break;
-            
+
             //退出登录
         case 'logout';
             if ($method == "POST") {
@@ -121,7 +124,7 @@ switch ($apitype) {
             if ($method == "POST") {
                 header('content-type:application/json;charset=utf8');
                 $data = json_decode(file_get_contents('php://input'), true, 10);
-                $add_infer_server = add_infer_server($data["user_token"], $data["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["note"]);
+                $add_infer_server = add_infer_server($data["user_token"], $data["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["note"]);
                 $res = array("message" => $add_infer_server);
                 echo json_encode($res, JSON_PRETTY_PRINT);
             } else {
@@ -147,7 +150,7 @@ switch ($apitype) {
             if ($method == "POST") {
                 header('content-type:application/json;charset=utf8');
                 $data = json_decode(file_get_contents('php://input'), true, 10);
-                $update_infer_server = update_server($data["user_token"], $id, $data["prarm"]["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["note"]);
+                $update_infer_server = update_server($data["user_token"], $id, $data["prarm"]["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["note"]);
                 $res = array("message" => $update_infer_server);
                 echo json_encode($res, JSON_PRETTY_PRINT);
             } else {
@@ -173,16 +176,28 @@ switch ($apitype) {
         switch ($actmode) {
             //获取说话人
         case 'get_spks';
-            header('content-type:application/json;charset=utf8');
-            $data = json_decode(file_get_contents('php://input'), true, 10);
-
+            if ($method == "GET") {
+                header('content-type:application/json;charset=utf8');
+                $data = json_decode(file_get_contents('php://input'), true, 10);
+                $spks = get_spks($data["type"], $data["brand"], $data["name"]);
+                $spk_list = array("message" => $spks[0], "spklist" => $spks[1]);
+                echo json_encode($spk_list, JSON_PRETTY_PRINT);
+            } else {
+                exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
+            }
             break;
 
             //推理
         case 'gen';
-            header('content-type:application/json;charset=utf8');
-            $data = json_decode(file_get_contents('php://input'), true, 10);
-
+            if ($method == "POST") {
+                header('content-type:application/json;charset=utf8');
+                $data = json_decode(file_get_contents('php://input'), true, 10);
+                $gen = gen_audio($data["access_token"], $data["type"], $data["brand"], $data['name'], $data['prarm']);
+                $gen_res = array("message" => $gen[0], "audio" => $gen[1]);
+                echo json_encode($gen_res, JSON_PRETTY_PRINT);
+            } else {
+                exceptions::doErr(405, 'HTTP/1.1 405 Method not allowed', '不支持该请求方法');
+            }
             break;
         }
         break;
