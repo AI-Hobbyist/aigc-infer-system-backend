@@ -6,4 +6,4 @@ $user = 'root'; // mysql用户名
 $pass = ''; // mysql用户名密码
 $appdata = 'aigc'; //后端数据库名称
 $userdata = 'ucenter'; //用户数据库名称
-$avatar_api = 'https://uc.ai-hobbyist.org/avatar.php?&size=bige&ts=1uid=';
+$avatar_api = 'https://uc.ai-hobbyist.org/avatar.php?&size=big&ts=1&uid=';

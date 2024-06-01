@@ -8,7 +8,7 @@ function get_spks($category, $brand, $name) {
         $is_exist = $db-> check_type($category, $brand, $name);
         if ($is_exist) {
             $urls = $db->get_url($cat, $bra, $name);
-            $spk_url = $urls[0]."/".$urls[1];
+            $spk_url = $urls[0].$urls[1];
             $data = POSTDATA::getContent($spk_url);
             if ($data[0] == 200){
                 $spk_list = json_decode($data[1]);

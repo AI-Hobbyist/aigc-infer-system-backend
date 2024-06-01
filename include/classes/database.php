@@ -275,8 +275,8 @@ class database {
     #获取APPKEY
     function get_infer_prarm($category, $brand, $name){
         global $appdata;
-        $res = $this->query("select app_key, server from $appdata.apis where name='$name' and brand = '$brand' and category = '$category'");
-        return array($res[0][0],$res[0][1]);
+        $res = $this->query("select app_key, server, infer_url from $appdata.apis where name='$name' and brand = '$brand' and category = '$category'");
+        return array($res[0][0],$res[0][1],$res[0][2]);
     }
     
 
@@ -303,23 +303,23 @@ class database {
 
     #--------------后端管理--------------
     #添加推理后端
-    function add_infer_server($server, $name, $username, $category, $brand, $appkey, $spk_url, $note) {
+    function add_infer_server($server, $name, $username, $category, $brand, $appkey, $spk_url, $infer_url, $note) {
         global $appdata;
         $date = time();
-        $this->query_change("insert into $appdata.apis (server, name, added_by, category, brand, app_key, spk_url, note, date) values ('$server', '$name', '$username', '$category', '$brand', '$appkey', '$spk_url', '$note', '$date')");
+        $this->query_change("insert into $appdata.apis (server, name, added_by, category, brand, app_key, spk_url, infervurl, note, date) values ('$server', '$name', '$username', '$category', '$brand', '$appkey', '$spk_url', '$infer_url', '$note', '$date')");
     }
 
     #列出推理后端
     function get_server_list($index) {
         global $appdata;
         $res = $this->query("select * from $appdata.apis");
-        return array($res[$index][0], $res[$index][1], $res[$index][2], $res[$index][3], $res[$index][4], $res[$index][5], $res[$index][6], $res[$index][7], $res[$index][8], $res[$index][9]);
+        return array($res[$index][0], $res[$index][1], $res[$index][2], $res[$index][3], $res[$index][4], $res[$index][5], $res[$index][6], $res[$index][7], $res[$index][8], $res[$index][9], $res[$index][10]);
     }
 
     #修改推理后端
-    function update_server($id, $server, $name, $category, $brand, $appkey, $spkurl) {
+    function update_server($id, $server, $name, $category, $brand, $appkey, $spkurl, $inferurl, $note) {
         global $appdata;
-        $this->query_change("update $appdata.apis set server='$server', name='$name', category='$category', brand='$brand', spk_url='$spkurl', app_key='$appkey' where id='$id'");
+        $this->query_change("update $appdata.apis set server='$server', name='$name', category='$category', brand='$brand', app_key='$appkey', spk_url='$spkurl', infer_url='$inferurl', note='$note' where id='$id'");
     }
     
     #删除推理后端

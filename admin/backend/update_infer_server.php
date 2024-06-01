@@ -1,6 +1,6 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'].'/include/classes.php');
-function update_server($user_token, $id, $server, $name, $category, $brand, $appkey, $spkurl) {
+function update_server($user_token, $id, $server, $name, $category, $brand, $appkey, $spkurl, $inferurl, $note) {
     global $db;
     $cat = strtolower($category);
     $bra = strtolower($brand);
@@ -11,7 +11,7 @@ function update_server($user_token, $id, $server, $name, $category, $brand, $app
         if ($group < 1) {
             $msg = "无权进行该操作！";
         } else {
-            if ($id != "" && $server != "" && $name != "" && $category != "" && $brand != "" && $spkurl !="") {
+            if ($id != "" && $server != "" && $name != "" && $category != "" && $brand != "" && $spkurl !="" && $inferurl != "") {
                 $is_exist = $db-> server_id_exist($id);
                 $is_server_exist = $db->check_server_id($server, $id);
                 $is_api_exist = $db-> check_backend_id($name, $bra, $id);
@@ -19,7 +19,7 @@ function update_server($user_token, $id, $server, $name, $category, $brand, $app
                     if (!$is_server_exist) {
                         if (!$is_api_exist) {
                             if (check_support($cat, $bra)) {
-                                $db->update_server($id, $server, $name, $cat, $bra, $appkey, $spkurl);
+                                $db->update_server($id, $server, $name, $cat, $bra, $appkey, $spkurl, $inferurl, $note);
                                 $msg = "更新成功！";
                             } else {
                                 $msg = "更新失败，分类 $category 里面没有名为 $bra 的项目！";
@@ -34,7 +34,7 @@ function update_server($user_token, $id, $server, $name, $category, $brand, $app
                     $msg = "该后端不存在或已被删除！";
                 }
             } else {
-                $msg = "后端 id、服务器地址、名称、项目类型、项目名称、说话人列表链接均不能为空！";
+                $msg = "后端 id、服务器地址、名称、项目类型、项目名称、说话人列表接入点，推理接入点均不能为空！";
             }
         }
     }

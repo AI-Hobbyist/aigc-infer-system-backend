@@ -1,7 +1,7 @@
 <?php
 include($_SERVER['DOCUMENT_ROOT'].'/include/classes.php');
 include($_SERVER['DOCUMENT_ROOT'].'/include/functions.php');
-function add_infer_server($user_token, $server, $name, $category, $brand, $appkey, $spkurl, $note) {
+function add_infer_server($user_token, $server, $name, $category, $brand, $appkey, $spkurl, $inferurl, $note) {
     global $db;
     $cat = strtolower($category);
     $bra = strtolower($brand);
@@ -14,13 +14,13 @@ function add_infer_server($user_token, $server, $name, $category, $brand, $appke
         } else {
             $uid = $db->get_uid_by_user_token($user_token);
             $user_info = $db->get_info_by_uid($uid);
-            if ($server != "" && $name != "" && $cat != "" && $brand != "" && $spkurl !="") {
+            if ($server != "" && $name != "" && $cat != "" && $brand != "" && $spkurl !="" && $inferurl != "") {
                 $is_server_exist = $db->check_server($server);
                 $is_api_exist = $db-> check_backend($name, $bra);
                 if (!$is_server_exist) {
                     if (!$is_api_exist) {
                         if (check_support($cat, $bra)) {
-                            $db->add_infer_server($server, $name, $user_info[1], $cat, $bra, $appkey, $spkurl, $note);
+                            $db->add_infer_server($server, $name, $user_info[1], $cat, $bra, $appkey, $spkurl, $inferurl, $note);
                             $msg = "添加成功！";
                         } else {
                             $msg = "添加失败，分类 $category 里面没有名为 $bra 的项目！";
@@ -32,7 +32,7 @@ function add_infer_server($user_token, $server, $name, $category, $brand, $appke
                     $msg = "推理服务器 $server 已存在！";
                 }
             } else {
-                $msg = "服务器地址、服务器名、项目类型、项目名称、说话人列表链接、不能为空！";
+                $msg = "服务器地址、服务器名、项目类型、项目名称、说话人列表接入点、推理接入点不能为空！";
             }
         }
     }

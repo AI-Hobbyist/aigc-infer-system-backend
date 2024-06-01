@@ -124,7 +124,7 @@ switch ($apitype) {
             if ($method == "POST") {
                 header('content-type:application/json;charset=utf8');
                 $data = json_decode(file_get_contents('php://input'), true, 10);
-                $add_infer_server = add_infer_server($data["user_token"], $data["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["note"]);
+                $add_infer_server = add_infer_server($data["user_token"], $data["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["infer_url"], $data["prarm"]["note"]);
                 $res = array("message" => $add_infer_server);
                 echo json_encode($res, JSON_PRETTY_PRINT);
             } else {
@@ -150,7 +150,7 @@ switch ($apitype) {
             if ($method == "POST") {
                 header('content-type:application/json;charset=utf8');
                 $data = json_decode(file_get_contents('php://input'), true, 10);
-                $update_infer_server = update_server($data["user_token"], $id, $data["prarm"]["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["note"]);
+                $update_infer_server = update_server($data["user_token"], $id, $data["prarm"]["server"], $data["prarm"]["name"], $data["prarm"]["category"], $data["prarm"]["brand"], $data["prarm"]["appkey"], $data["prarm"]["spk_url"], $data["prarm"]["infer_url"], $data["prarm"]["note"]);
                 $res = array("message" => $update_infer_server);
                 echo json_encode($res, JSON_PRETTY_PRINT);
             } else {

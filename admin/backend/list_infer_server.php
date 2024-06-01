@@ -25,8 +25,9 @@ function list_servers($user_token) {
                         "brand" => $servers[5],
                         "appkey" => $servers[6],
                         "spkurl" => $servers[7],
-                        "note" => $servers[8],
-                        "added_at" => date("Y-m-d H:i:s", $servers[9])
+                        "inferurl" => $servers[8],
+                        "note" => $servers[9],
+                        "added_at" => date("Y-m-d H:i:s", $servers[10])
                     );
                     if ($servers[0] != '') {
                         array_push($server_list, $server_data);

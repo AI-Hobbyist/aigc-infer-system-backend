@@ -12,7 +12,7 @@ function gen_audio($access_token, $category, $brand, $name, $prarms){
             $infer = $db-> get_infer_prarm($category, $brand, $name);
             $prarms["app_key"] = $infer[0];
             $infer_data = json_encode($prarms);
-            $res = POSTDATA::json($infer[1], $infer_data);
+            $res = POSTDATA::json($infer[1].$infer[2], $infer_data);
             if($res[0] == 200){
                 $res_data = json_decode($res[1],true);
                 $msg = $res_data['msg'];
