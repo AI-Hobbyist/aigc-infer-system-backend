@@ -3,7 +3,7 @@
 
 **推理前端：**[https://github.com/AI-Hobbyist/aigc-infer-system-frontend](https://github.com/AI-Hobbyist/aigc-infer-system-frontend)
 
-**后台（用户+管理）：**[https://github.com/AI-Hobbyist/aigc-infer-system-control-panel](https://github.com/AI-Hobbyist/aigc-infer-system-control-panel)
+**平台后台：**[https://github.com/AI-Hobbyist/aigc-infer-system-control-panel](https://github.com/AI-Hobbyist/aigc-infer-system-control-panel)
 
 <!-- **后端开发/维护：**[红血球AE3803](https://github.com/Erythrocyte3803) -->
 ## 后端开发/维护：
